@@ -1,12 +1,22 @@
 function AssignmentList({ assignments }) {
+  if (assignments.length === 0) {
+    return <p>No assignments yet.</p>;
+  }
+
   return (
-    <ul>
-      {assignments.map((a) => (
-        <li key={a.id}>
-          {a.title} – Due {new Date(a.dueAt).toLocaleDateString()}
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h2>Your Assignments</h2>
+
+      <ul>
+        {assignments.map((assignment) => (
+          <li key={assignment.id}>
+            <strong>{assignment.title}</strong>
+            <div>Course: {assignment.course}</div>
+            <div>Due: {assignment.dueDate}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

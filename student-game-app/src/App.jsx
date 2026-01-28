@@ -52,25 +52,43 @@ function App() {
 
 export default App;
 */
-import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import AssignmentForm from "./components/AssignmentForm";
+import AssignmentList from "./components/AssignmentList";
 
 function App() {
+  const [assignments, setAssignments] = useState([]);
 
-  CurrentTime();
-  return <h1>Intial</h1>;
-}
-function CurrentTime() {
-  const [time, setTime] = React.useState(new Date());
+  function handleAddAssignment(assignment) {
+    setAssignments((prev) => [...prev, assignment]);
+  }
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+  return (
+    <div>
+      <nav>
+        <Link to="/">Dashboard</Link> |{" "}
+        <Link to="/character">Character</Link>
+      </nav>
 
-    return () => clearInterval(interval);
-  }, []);
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <AssignmentForm onAddAssignment={handleAddAssignment} />
+              <AssignmentList assignments={assignments} />
+            </>
+          }
+        />
 
-  return <div>{time.toLocaleString()}</div>;
+        <Route
+          path="/character"
+          element={<h2>Character Page (Coming Soon)</h2>}
+        />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
