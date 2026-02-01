@@ -42,3 +42,7 @@ export function getAssignmentStatus(dueDate, submitted) {
 
   return "Pending";
 }
+
+export function isSameDay(a, b) {
+  return new Date(a).toDateString() === new Date(b).toDateString();
+}

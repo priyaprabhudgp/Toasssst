@@ -1,74 +1,110 @@
-/*import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './styles/App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App*/
-/*import { useState } from "react";
-import AssignmentForm from "./components/AssignmentForm"; 
-import AssignmentList from "./components/AssignmentList";
-
-function App() {
-  const [assignments, setAssignments] = useState([]);
-  const [coins, setCoins] = useState(0);
-
-  return (
-    <div>
-      <h1>Student Quest</h1>
-      <p>Coins: {coins}</p>
-      <AssignmentList assignments={assignments} />
-    </div>
-  );
-}
-
-export default App;
-*/
+import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { auth } from "./firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+
+import AuthForm from "./components/Authform";
 import AssignmentForm from "./components/AssignmentForm";
 import AssignmentList from "./components/AssignmentList";
+import { calculateSubmissionCoins } from "./logic/coinRules";
+import { db } from "./firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 function App() {
+  const [user, setUser] = useState(null);
   const [assignments, setAssignments] = useState([]);
+  const [coins, setCoins] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  function handleAddAssignment(assignment) {
+  // Listen to auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Load user data when login
+  useEffect(() => {
+  if (!user) return;
+
+  const loadData = async () => {
+    const docRef = doc(db, "users", user.uid);
+    const snapshot = await getDoc(docRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      setAssignments(data.assignments || []);
+      setCoins(data.coins || 0);
+    } else {
+      await setDoc(docRef, { assignments: [], coins: 0 });
+      setAssignments([]);
+      setCoins(0);
+    }
+
+    setLoading(false); // ✅ IMPORTANT
+  };
+
+  loadData();
+}, [user]);
+
+  // Save user data on change
+  useEffect(() => {
+  if (!user || loading) return; // 🚨 GUARD
+
+  const saveData = async () => {
+    const docRef = doc(db, "users", user.uid);
+    await setDoc(docRef, { assignments, coins });
+  };
+
+  saveData();
+}, [assignments, coins, user, loading]);
+
+
+  const handleAddAssignment = (assignment) => {
     setAssignments((prev) => [...prev, assignment]);
+  };
+
+  const handleSubmitAssignment = (id) => {
+    setAssignments((prev) =>
+      prev.map((assignment) => {
+        if (assignment.id !== id || assignment.submitted) return assignment;
+
+        const submittedAt = Date.now();
+        const coinsEarned = calculateSubmissionCoins({
+          dueDate: assignment.dueDate,
+          submittedAt,
+        });
+
+        setCoins((prevCoins) => prevCoins + coinsEarned);
+
+        return {
+          ...assignment,
+          submitted: true,
+          submittedAt,
+          coinsAwarded: coinsEarned,
+        };
+      })
+    );
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
+  if (!user) {
+    return <AuthForm onLogin={setUser} />;
   }
 
   return (
     <div>
+      <p>Logged in as: {user.email}</p>
+      <button onClick={handleLogout}>Logout</button>
+      <p>🪙 Coins: {coins}</p>
+
       <nav>
-        <Link to="/">Dashboard</Link> |{" "}
-        <Link to="/character">Character</Link>
+        <Link to="/">Dashboard</Link>
       </nav>
 
       <Routes>
@@ -77,14 +113,12 @@ function App() {
           element={
             <>
               <AssignmentForm onAddAssignment={handleAddAssignment} />
-              <AssignmentList assignments={assignments} />
+              <AssignmentList
+                assignments={assignments}
+                onSubmitAssignment={handleSubmitAssignment}
+              />
             </>
           }
-        />
-
-        <Route
-          path="/character"
-          element={<h2>Character Page (Coming Soon)</h2>}
         />
       </Routes>
     </div>
