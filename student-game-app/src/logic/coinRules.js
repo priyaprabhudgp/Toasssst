@@ -50,3 +50,15 @@ export function calculateOverduePenalty({ dueDate, now }) {
   const daysLate = Math.floor((now - dueDate) / 86400000);
   return daysLate * 5; // 5 coins per day late
 }
+
+export function calculateDailyPenalty(assignments, now) {
+  let penalty = 0;
+
+  for (const a of assignments) {
+    if (!a.submitted && now > a.dueDate) {
+      penalty += 5;
+    }
+  }
+
+  return penalty;
+}

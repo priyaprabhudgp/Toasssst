@@ -1,25 +1,26 @@
-import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import {isSameDay} from "./logic/timeUtils";
 
-import AuthForm from "./components/Authform";
+import AuthForm from "./components/AuthForm";
 import AssignmentForm from "./components/AssignmentForm";
 import AssignmentList from "./components/AssignmentList";
-
+import About from "./pages/About";
+import Store from "./pages/Store";
 import { calculateSubmissionCoins } from "./logic/coinRules";
 import { db } from "./firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
-import About from "./pages/About";
-import Store from "./pages/Store";
-
 function App() {
-  const [user, setUser] = useState(null);
   const [assignments, setAssignments] = useState([]);
-  const [coins, setCoins] = useState(0);
+  const [coins, setCoins] = useState(3000000);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lastDecayCheck, setLastDecayCheck] = useState(null);
 
+  
   // Listen to auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -31,39 +32,63 @@ function App() {
 
   // Load user data when login
   useEffect(() => {
-    if (!user) return;
+  if (!user) return;
 
-    const loadData = async () => {
-      const docRef = doc(db, "users", user.uid);
-      const snapshot = await getDoc(docRef);
+  const loadData = async () => {
+    const docRef = doc(db, "users", user.uid);
+    const snapshot = await getDoc(docRef);
 
-      if (snapshot.exists()) {
-        const data = snapshot.data();
-        setAssignments(data.assignments || []);
-        setCoins(data.coins || 0);
-      } else {
-        await setDoc(docRef, { assignments: [], coins: 0 });
-        setAssignments([]);
-        setCoins(0);
-      }
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      setAssignments(data.assignments || []);
+      setCoins(data.coins || 0);
+    } else {
+      await setDoc(docRef, { assignments: [], coins: 0 });
+      setAssignments([]);
+      setCoins(0);
+    }
 
-      setLoading(false);
-    };
+    setLoading(false); // ✅ IMPORTANT
+  };
 
-    loadData();
-  }, [user]);
+  loadData();
+}, [user]);
 
   // Save user data on change
   useEffect(() => {
-    if (!user || loading) return;
+  if (!user || loading) return; // 🚨 GUARD
 
-    const saveData = async () => {
-      const docRef = doc(db, "users", user.uid);
-      await setDoc(docRef, { assignments, coins });
-    };
+  const saveData = async () => {
+    const docRef = doc(db, "users", user.uid);
+    await setDoc(docRef, { assignments, coins, lastDecayCheck });
+  };
 
-    saveData();
-  }, [assignments, coins, user, loading]);
+  saveData();
+}, [assignments, coins, user, loading]);
+
+useEffect(() => {
+  if (!user || loading) return;
+
+  const now = new Date();
+  if (lastDecayCheck && isSameDay(lastDecayCheck, now)) {
+    return;
+  }
+
+  let totalPenalty = 0;
+  // Calculate total overdue penalty
+  assignments.forEach((a) => {
+    if(!a.submitted && now > a.dueDate) {
+      totalPenalty += Math.floor((now - new Date(a.dueDate)) / 86400000) * 5;
+    }  });
+
+  if (totalPenalty > 0) {
+    setCoins((prevCoins) => Math.max(prevCoins - totalPenalty, 0));
+  }
+
+  setLastDecayCheck(now);
+}, [user, loading, assignments, lastDecayCheck]);
+
+
 
   const handleAddAssignment = (assignment) => {
     setAssignments((prev) => [...prev, assignment]);
@@ -105,7 +130,6 @@ function App() {
       <p>Logged in as: {user.email}</p>
       <button onClick={handleLogout}>Logout</button>
       <p>🪙 Coins: {coins}</p>
-
       <nav>
         <Link to="/">Dashboard</Link> |{" "}
         <Link to="/character">Character</Link> |{" "}
@@ -119,15 +143,15 @@ function App() {
           element={
             <>
               <AssignmentForm onAddAssignment={handleAddAssignment} />
-              <AssignmentList
-                assignments={assignments}
-                onSubmitAssignment={handleSubmitAssignment}
-              />
+              <AssignmentList assignments={assignments} />
             </>
           }
         />
 
-        <Route path="/character" element={<h2>Character Page (Coming Soon)</h2>} />
+        <Route
+          path="/character"
+          element={<h2>Character Page (Coming Soon)</h2>}
+        />
 
         <Route path="/about" element={<About />} />
 
