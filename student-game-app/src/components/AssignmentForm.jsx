@@ -21,6 +21,8 @@ function AssignmentForm({ onAddAssignment }) {
       dueDate,
       createdAt: Date.now(),
       submitted: false,
+      submittedAt: null,
+      coinsAwarded: 0,
     };
 
     onAddAssignment(newAssignment);
