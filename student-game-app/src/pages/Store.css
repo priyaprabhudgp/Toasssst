@@ -164,6 +164,7 @@
   border-radius: 26px;
   padding: 22px;
   display: flex;
+  overflow: hidden;
 }
 
 .itemsScroll {
