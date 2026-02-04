@@ -62,7 +62,7 @@ function Store({ coins, setCoins }) {
             <span>Store</span>
           </Link>
 
-          <Link className="sideLink" to="/bread">
+          <Link className="sideLink" to="/character">
             <img className="sideImgIcon" src={breadIcon} alt="Bread icon" />
             <span>Bread</span>
           </Link>
