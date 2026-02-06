@@ -78,7 +78,7 @@ function Store({ coins, setCoins }) {
 
         <button className="logoutBtn" type="button" onClick={handleLogout}>
           <img className="sideImgIcon" src={logoutIcon} alt="Logout icon" />
-          <span>Logout</span>
+          <span><p>Logout</p></span>
           
         </button>
       </aside>

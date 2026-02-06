@@ -143,7 +143,10 @@ useEffect(() => {
           element={
             <>
               <AssignmentForm onAddAssignment={handleAddAssignment} />
-              <AssignmentList assignments={assignments} />
+              <AssignmentList 
+                assignments={assignments} 
+                onSubmitAssignment={handleSubmitAssignment} 
+              />
             </>
           }
         />

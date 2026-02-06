@@ -1,13 +1,14 @@
-import * as React from "react";
-import { unstable_PasswordToggleField as PasswordToggleField } from "radix-ui";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import React, { useState } from "react";
 import "./PasswordToggleFieldDemo.css";
 
 // Controlled password field component with scoped classes to avoid global CSS leaks
-const PasswordToggleFieldDemo = ({ value, onChange, placeholder, required, name }) => (
-	<PasswordToggleField.Root>
+const PasswordToggleFieldDemo = ({ value, onChange, placeholder, required, name }) => {
+	const [showPassword, setShowPassword] = useState(false);
+
+	return (
 		<div className="ptf-Root">
-			<PasswordToggleField.Input
+			<input
+				type={showPassword ? "text" : "password"}
 				className="ptf-Input"
 				value={value}
 				onChange={onChange}
@@ -15,14 +16,16 @@ const PasswordToggleFieldDemo = ({ value, onChange, placeholder, required, name 
 				required={required}
 				name={name}
 			/>
-			<PasswordToggleField.Toggle className="ptf-Toggle">
-				<PasswordToggleField.Icon
-					visible={<EyeOpenIcon />}
-					hidden={<EyeClosedIcon />}
-				/>
-			</PasswordToggleField.Toggle>
+			<button
+				className="ptf-Toggle"
+				type="button"
+				onClick={() => setShowPassword(!showPassword)}
+				aria-label={showPassword ? "Hide password" : "Show password"}
+			>
+				{showPassword ? "👁️" : "👁️‍🗨️"}
+			</button>
 		</div>
-	</PasswordToggleField.Root>
-);
+	);
+};
 
 export default PasswordToggleFieldDemo;
