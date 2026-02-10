@@ -8,10 +8,11 @@ function InventoryCupboard({ inventory, character, onEquipItem }) {
 
   const tabConfig = {
     spreads: {
-      label: "Spreads",
+      label: "Items",
       items: inventory.spreads || [],
       equipKey: "spread",
     },
+    /*
     meat: {
       label: "Toppings",
       items: inventory.toppings || [],
@@ -21,7 +22,7 @@ function InventoryCupboard({ inventory, character, onEquipItem }) {
       label: "Accessories",
       items: inventory.accessories || [],
       equipKey: "accessory",
-    },
+    },*/
 
 
   };
