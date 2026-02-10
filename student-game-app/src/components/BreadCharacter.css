@@ -21,19 +21,19 @@
 }
 
 .bread-base-image {
-  width: 200%;
-  height: 200%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  position: center;
+  position: absolute;
   bottom: 0;
   left: 0;
 }
 
 .bread-base-image2 {
-  width: 200%;
-  height: 200%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  position: center;
+  position: absolute;
   bottom: 0;
   left: 0;
 }
