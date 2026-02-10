@@ -1,23 +1,66 @@
+import { useState } from "react";
 import BreadCharacter from "../components/BreadCharacter";
 import InventoryCupboard from "../components/InventoryCupboard";
+import coinIcon from "../assets/coin.png";
+import "./CharacterPage.css";
 
-export default function CharacterPage({
-  character,
-  setCharacter,
-  inventory,
-}) {
+function formatNumber(n) {
+  return n.toLocaleString("en-US");
+}
+
+function CharacterPage({ character, inventory, coins, onUpdateCharacter }) {
+  const [tempCharacter, setTempCharacter] = useState(character);
+  const [saved, setSaved] = useState(false);
+
+  const handleEquipItem = (newCharacter) => {
+    setTempCharacter(newCharacter);
+  };
+
+  const handleSave = () => {
+    onUpdateCharacter(tempCharacter);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleReset = () => {
+    setTempCharacter(character);
+  };
+
   return (
-    <div>
-      <h1>Customize Your Bread</h1>
+    <div className="characterPageContentOnly">
+      <div className="characterPageHeader">
+        <h1 className="characterPageTitle">Customize Your Toast</h1>
 
-      <BreadCharacter character={character} />
+        <div className="coinBox">
+          <img className="coinIcon" src={coinIcon} alt="Coin icon" />
+          <div className="coinText">{formatNumber(coins)}</div>
+        </div>
+      </div>
 
-      <InventoryCupboard
-        inventory={inventory}
-        onEquip={(type, item) =>
-          setCharacter(prev => ({ ...prev, [type]: item }))
-        }
-      />
+      <section className="characterPanel">
+        <div className="characterPreviewSection">
+          <div className="previewContainer">
+            <BreadCharacter character={tempCharacter} size="small" />
+          </div>
+
+          <div className="previewControls">
+            <button className="saveButton" onClick={handleSave}>
+              {saved ? "✓ Saved!" : "Save Customization"}
+            </button>
+            <button className="resetButton" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <InventoryCupboard
+          inventory={inventory}
+          character={tempCharacter}
+          onEquipItem={handleEquipItem}
+        />
+      </section>
     </div>
   );
 }
+
+export default CharacterPage;

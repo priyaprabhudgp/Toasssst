@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import AssignmentForm from "../components/AssignmentForm";
 import AssignmentList from "../components/AssignmentList";
+import BreadCharacter from "../components/BreadCharacter";
 import coinIcon from "../assets/coin.png";
 
 function formatNumber(n) {
@@ -13,7 +14,10 @@ function Dashboard({
   assignments,
   onAddAssignment,
   onSubmitAssignment,
+  character,
 }) {
+  const navigate = useNavigate();
+
   return (
     <div className="dashboardContentOnly">
       <div className="dashboardHeader">
@@ -27,9 +31,24 @@ function Dashboard({
 
       <section className="dashboardPanel">
         <div className="panelScroll">
-          {/* Section 1: Assignment Form */}
-          <div className="formSection">
-            <AssignmentForm onAddAssignment={onAddAssignment} />
+          {/* Top row: Character Preview + Assignment Form side-by-side */}
+          <div className="topRow">
+            <div className="characterSection">
+              <h3>Your Toast Buddy</h3>
+              <div className="characterPreview">
+                <BreadCharacter character={character} size="small" />
+              </div>
+              <button
+                className="customizeButton"
+                onClick={() => navigate("/bread")}
+              >
+                Customize
+              </button>
+            </div>
+
+            <div className="formSection">
+              <AssignmentForm onAddAssignment={onAddAssignment} />
+            </div>
           </div>
 
           {/* Section 2: Assignment List */}

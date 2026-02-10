@@ -1,0 +1,82 @@
+.inventoryCupboard {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  border: 2px solid #e8d7c3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inventoryCupboard h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 24px;
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e8d7c3;
+}
+
+.tab {
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #666;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #b8956a;
+}
+
+.tab.active {
+  color: #b8956a;
+  border-bottom-color: #b8956a;
+}
+
+.itemsGrid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  padding-right: 8px;
+}
+
+.emptyMessage {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Scrollbar styling */
+.itemsGrid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.itemsGrid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.itemsGrid::-webkit-scrollbar-thumb {
+  background: #b8956a;
+  border-radius: 4px;
+}
+
+.itemsGrid::-webkit-scrollbar-thumb:hover {
+  background: #9a7c52;
+}

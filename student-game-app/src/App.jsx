@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { isSameDay } from "./logic/timeUtils";
 
 import Dashboard from "./pages/Dashboard";
+import CharacterPage from "./pages/CharacterPage";
 import AuthForm from "./components/AuthForm";
 import AssignmentForm from "./components/AssignmentForm";
 import AssignmentList from "./components/AssignmentList";
@@ -22,17 +23,41 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastDecayCheck, setLastDecayCheck] = useState(null);
+  const [character, setCharacter] = useState({
+    base: "bread",
+    spread: null,
+    topping: null,
+    accessory: null,
+  });
+  const [inventory, setInventory] = useState({
+    spreads: [],
+    toppings: [],
+    accessories: [],
+  });
+  const [packsOwned, setPacksOwned] = useState([]);
 
   // Listen to auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      
+
       // Clear state when user changes (logout or login switch)
       if (!currentUser) {
         setAssignments([]);
         setCoins(3000000);
         setLastDecayCheck(null);
+        setCharacter({
+          base: "bread",
+          spread: null,
+          topping: null,
+          accessory: null,
+        });
+        setInventory({
+          spreads: [],
+          toppings: [],
+          accessories: [],
+        });
+        setPacksOwned([]);
         setLoading(true);
       }
     });
@@ -41,19 +66,6 @@ function App() {
   }, []);
 
   // Load user data when login
-
-  const [character, setCharacter] = useState({
-  base: "bread",        // future-proof
-  spread: null,         // butter, jam, peanut_butter
-  topping: null,        // sprinkles, berries
-  accessory: null,      // hat, plate
-});
-
-const [inventory, setInventory] = useState({
-  spreads: ["butter"],
-  toppings: [],
-  accessories: [],
-});
   useEffect(() => {
     if (!user) return;
 
@@ -66,12 +78,26 @@ const [inventory, setInventory] = useState({
         setAssignments(data.assignments || []);
         setCoins(data.coins || 0);
         setLastDecayCheck(data.lastDecayCheck || null);
+        setCharacter(data.character || {
+          base: "bread",
+          spread: null,
+          topping: null,
+          accessory: null,
+        });
+        setInventory(data.inventory || {
+          spreads: [],
+          toppings: [],
+          accessories: [],
+        });
+        setPacksOwned(data.packsOwned || []);
       } else {
-        
         await setDoc(docRef, {
           assignments: [],
-          coins: 0,
+          coins: 3000000,
           lastDecayCheck: null,
+          character: { base: "bread", spread: null, topping: null, accessory: null },
+          inventory: { spreads: [], toppings: [], accessories: [] },
+          packsOwned: [],
         });
         setAssignments([]);
         setCoins(3000000);
@@ -90,11 +116,23 @@ const [inventory, setInventory] = useState({
 
     const saveData = async () => {
       const docRef = doc(db, "users", user.uid);
-      await setDoc(docRef, { assignments, coins, lastDecayCheck });
+      await setDoc(
+        docRef,
+        {
+          assignments,
+          coins,
+          lastDecayCheck,
+          character,
+          inventory,
+          packsOwned,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
     };
 
     saveData();
-  }, [assignments, coins, user, loading, lastDecayCheck]);
+  }, [assignments, coins, user, loading, lastDecayCheck, character, inventory, packsOwned]);
 
   // Daily overdue coin decay
   useEffect(() => {
@@ -149,11 +187,22 @@ const [inventory, setInventory] = useState({
   };
 
   const handleLogout = async () => {
-    setAssignments([]);
-    setCoins(3000000);
-    setLastDecayCheck(null);
-    setLoading(true);
     await signOut(auth);
+  };
+
+  const handleUpdateCharacter = (newCharacter) => {
+    setCharacter(newCharacter);
+  };
+
+  const handleBuyPack = (packId, packItems) => {
+    // Add items to inventory
+    setInventory((prev) => ({
+      ...prev,
+      spreads: [...new Set([...prev.spreads, ...packItems])],
+    }));
+
+    // Track pack ownership
+    setPacksOwned((prev) => [...new Set([...prev, packId])]);
   };
 
   if (!user) {
@@ -168,28 +217,42 @@ const [inventory, setInventory] = useState({
         <Route
           path="/"
           element={
-          <Dashboard
-          coins={coins}
-          assignments={assignments}
-          onAddAssignment={handleAddAssignment}
-          onSubmitAssignment={handleSubmitAssignment}
-          />
-  }
+            <Dashboard
+              coins={coins}
+              assignments={assignments}
+              onAddAssignment={handleAddAssignment}
+              onSubmitAssignment={handleSubmitAssignment}
+              character={character}
+            />
+          }
         />
 
         <Route
-          path="/character"
-          element={<h2>Character Page (Coming Soon)</h2>}
+          path="/bread"
+          element={
+            <CharacterPage
+              character={character}
+              inventory={inventory}
+              coins={coins}
+              onUpdateCharacter={handleUpdateCharacter}
+            />
+          }
         />
 
         <Route path="/about" element={<About />} />
 
         <Route
           path="/store"
-          element={<Store coins={coins} setCoins={setCoins} />}
+          element={
+            <Store
+              coins={coins}
+              setCoins={setCoins}
+              packsOwned={packsOwned}
+              onBuyPack={handleBuyPack}
+            />
+          }
         />
 
-        <Route path="/bread" element={<h2>Bread Page (Coming Soon)</h2>} />
       </Route>
     </Routes>
   );

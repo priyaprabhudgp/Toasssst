@@ -1,0 +1,95 @@
+.inventoryItem {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #e8d7c3;
+  transition: all 0.2s ease;
+}
+
+.inventoryItem:hover {
+  border-color: #b8956a;
+  box-shadow: 0 4px 12px rgba(184, 149, 106, 0.2);
+}
+
+.inventoryItem.equipped {
+  background: #f0f8e8;
+  border-color: #4caf50;
+}
+
+.itemImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #faf7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemImage {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.equippedBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #4caf50;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.itemInfo {
+  width: 100%;
+  text-align: center;
+}
+
+.itemName {
+  margin: 0;
+  font-size: 13px;
+  color: #333;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.equipButton {
+  width: 100%;
+  padding: 6px 8px;
+  background: #b8956a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.equipButton:hover {
+  background: #9a7c52;
+}
+
+.equipButton.equipped {
+  background: #4caf50;
+}
+
+.equipButton.equipped:hover {
+  background: #388e3c;
+}

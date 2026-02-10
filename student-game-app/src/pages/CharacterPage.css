@@ -1,0 +1,131 @@
+/* Main wrapper */
+.characterPageContentOnly {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.characterPageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.characterPageTitle {
+  font-size: 60px;
+  margin: 0;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+.coinBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+.coinIcon {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.coinText {
+  font-size: 52px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: -2px 0 #7a4a2a, 0 2px #7a4a2a, 2px 0 #7a4a2a,
+    0 -2px #7a4a2a;
+  letter-spacing: 2px;
+}
+
+/* Main panel */
+.characterPanel {
+  flex: 1;
+  background: #f8efe6;
+  border-radius: 26px;
+  padding: 22px;
+  display: flex;
+  gap: 22px;
+  overflow: hidden;
+}
+
+/* Character preview section */
+.characterPreviewSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 300px;
+}
+
+.previewContainer {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  border: 2px solid #e8d7c3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  aspect-ratio: 1;
+}
+
+.previewControls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.saveButton,
+.resetButton {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.saveButton {
+  background: #4caf50;
+  color: white;
+}
+
+.saveButton:hover {
+  background: #388e3c;
+}
+
+.resetButton {
+  background: #b8956a;
+  color: white;
+}
+
+.resetButton:hover {
+  background: #9a7c52;
+}
+
+/* Inventory section */
+/* Already styled in InventoryCupboard.css */
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .characterPanel {
+    flex-direction: column;
+  }
+
+  .characterPreviewSection {
+    min-width: auto;
+  }
+
+  .previewContainer {
+    aspect-ratio: auto;
+    max-height: 300px;
+  }
+}

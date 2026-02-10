@@ -1,23 +1,22 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import "./Store.css";
 
 import coinIcon from "../assets/coin.png";
-import { STORE_ITEMS } from "../data/storeItems";
+import { PACKS } from "../data/packs";
 
 function formatNumber(n) {
   return n.toLocaleString("en-US");
 }
 
-function Store({ coins, setCoins }) {
-  const [owned, setOwned] = useState(() => new Set());
-  const items = useMemo(() => STORE_ITEMS, []);
+function Store({ coins, setCoins, packsOwned, onBuyPack }) {
+  const items = useMemo(() => PACKS, []);
 
-  function handleBuy(item) {
-    if (owned.has(item.id)) return;
-    if (coins < item.price) return;
+  function handleBuy(pack) {
+    if (packsOwned.includes(pack.id)) return;
+    if (coins < pack.price) return;
 
-    setCoins((c) => c - item.price);
-    setOwned((prev) => new Set(prev).add(item.id));
+    setCoins((c) => c - pack.price);
+    onBuyPack(pack.id, pack.items);
   }
 
   return (
@@ -34,35 +33,35 @@ function Store({ coins, setCoins }) {
       <section className="storePanel">
         <div className="itemsScroll">
           <div className="itemsGrid">
-            {items.map((item) => {
-              const isOwned = owned.has(item.id);
-              const canAfford = coins >= item.price;
+            {items.map((pack) => {
+              const isOwned = packsOwned.includes(pack.id);
+              const canAfford = coins >= pack.price;
 
               return (
                 <button
-                  key={item.id}
+                  key={pack.id}
                   type="button"
                   className={[
                     "itemCard",
                     isOwned ? "owned" : "",
                     !isOwned && !canAfford ? "locked" : "",
                   ].join(" ")}
-                  onClick={() => handleBuy(item)}
+                  onClick={() => handleBuy(pack)}
                   title={
                     isOwned
                       ? "Owned"
                       : canAfford
-                      ? `Buy for ${item.price}`
+                      ? `Buy for ${pack.price}`
                       : "Not enough coins"
                   }
                 >
                   <div className="itemImageWrap">
-                    <img className="itemImage" src={item.img} alt={item.name} />
+                    <img className="itemImage" src={pack.img} alt={pack.name} />
                   </div>
 
                   <div className="priceRow">
                     <img className="priceCoin" src={coinIcon} alt="Coin icon" />
-                    <span className="priceText">{formatNumber(item.price)}</span>
+                    <span className="priceText">{formatNumber(pack.price)}</span>
                   </div>
 
                   {isOwned && <div className="badge">Owned</div>}
