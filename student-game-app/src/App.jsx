@@ -25,14 +25,20 @@ function App() {
   const [lastDecayCheck, setLastDecayCheck] = useState(null);
   const [character, setCharacter] = useState({
     base: "bread",
+    jam: null,
+    meat: null,
+    mold: null,
+    mystery: null,
     spread: null,
-    topping: null,
-    accessory: null,
+    veggie: null,
   });
   const [inventory, setInventory] = useState({
+    jam: [],
+    meat: [],
+    mold: [],
+    mystery: [],
     spreads: [],
-    toppings: [],
-    accessories: [],
+    veggies: [],
   });
   const [packsOwned, setPacksOwned] = useState([]);
 
@@ -48,14 +54,20 @@ function App() {
         setLastDecayCheck(null);
         setCharacter({
           base: "bread",
+          jam: null,
+          meat: null,
+          mold: null,
+          mystery: null,
           spread: null,
-          topping: null,
-          accessory: null,
+          veggie: null,
         });
         setInventory({
+          jam: [],
+          meat: [],
+          mold: [],
+          mystery: [],
           spreads: [],
-          toppings: [],
-          accessories: [],
+          veggies: [],
         });
         setPacksOwned([]);
         setLoading(true);
@@ -80,14 +92,20 @@ function App() {
         setLastDecayCheck(data.lastDecayCheck || null);
         setCharacter(data.character || {
           base: "bread",
+          jam: null,
+          meat: null,
+          mold: null,
+          mystery: null,
           spread: null,
-          topping: null,
-          accessory: null,
+          veggie: null,
         });
         setInventory(data.inventory || {
+          jam: [],
+          meat: [],
+          mold: [],
+          mystery: [],
           spreads: [],
-          toppings: [],
-          accessories: [],
+          veggies: [],
         });
         setPacksOwned(data.packsOwned || []);
       } else {
@@ -95,8 +113,8 @@ function App() {
           assignments: [],
           coins: 3000000,
           lastDecayCheck: null,
-          character: { base: "bread", spread: null, topping: null, accessory: null },
-          inventory: { spreads: [], toppings: [], accessories: [] },
+          character: { base: "bread", jam: null, meat: null, mold: null, mystery: null, spread: null, veggie: null },
+          inventory: { jam: [], meat: [], mold: [], mystery: [], spreads: [], veggies: [] },
           packsOwned: [],
         });
         setAssignments([]);
@@ -195,11 +213,23 @@ function App() {
   };
 
   const handleBuyPack = (packId, packItems) => {
-    // Add items to inventory
-    setInventory((prev) => ({
-      ...prev,
-      spreads: [...new Set([...prev.spreads, ...packItems])],
-    }));
+    // Map pack ID to inventory category and add items
+    const packCategoryMap = {
+      jamPack: "jam",
+      meatPack: "meat",
+      moldPack: "mold",
+      mysteryPack: "mystery",
+      spreadPack: "spreads",
+      veggiesPack: "veggies",
+    };
+
+    const category = packCategoryMap[packId];
+    if (category) {
+      setInventory((prev) => ({
+        ...prev,
+        [category]: [...new Set([...prev[category], ...packItems])],
+      }));
+    }
 
     // Track pack ownership
     setPacksOwned((prev) => [...new Set([...prev, packId])]);

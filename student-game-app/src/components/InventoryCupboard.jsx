@@ -7,24 +7,36 @@ function InventoryCupboard({ inventory, character, onEquipItem }) {
   const [activeTab, setActiveTab] = useState("spreads");
 
   const tabConfig = {
+    jam: {
+      label: "Jam",
+      items: inventory.jam || [],
+      equipKey: "jam",
+    },
+    meat: {
+      label: "Meat",
+      items: inventory.meat || [],
+      equipKey: "meat",
+    },
+    mold: {
+      label: "Mold",
+      items: inventory.mold || [],
+      equipKey: "mold",
+    },
+    mystery: {
+      label: "Mystery",
+      items: inventory.mystery || [],
+      equipKey: "mystery",
+    },
     spreads: {
-      label: "Items",
+      label: "Spreads",
       items: inventory.spreads || [],
       equipKey: "spread",
     },
-    /*
-    meat: {
-      label: "Toppings",
-      items: inventory.toppings || [],
-      equipKey: "topping",
+    veggies: {
+      label: "Veggies",
+      items: inventory.veggies || [],
+      equipKey: "veggie",
     },
-    accessories: {
-      label: "Accessories",
-      items: inventory.accessories || [],
-      equipKey: "accessory",
-    },*/
-
-
   };
 
   const currentTab = tabConfig[activeTab];
