@@ -28,6 +28,8 @@ button {
 	max-height: 85vh;
 	padding: 25px;
 	animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    font-family:'Courier New', Courier, monospace; 
+    border: 2px solid #ddbf86;
 }
 .AlertDialogContent:focus {
 	outline: none;
@@ -36,8 +38,10 @@ button {
 .AlertDialogTitle {
 	margin: 0;
 	color: var(--mauve-12);
-	font-size: 17px;
-	font-weight: 500;
+	font-size: 30px;
+	font-weight: 100000;
+
+   
 }
 
 .AlertDialogDescription {
@@ -67,12 +71,12 @@ button {
 	outline-offset: 1px;
 }
 .Button.violet {
-	background-color: var(--violet-4);
+	background-color: #ffe4a3;
 	color: var(--violet-12);
 	outline-color: var(--violet-6);
 }
 .Button.violet:hover {
-	background-color: var(--mauve-3);
+	background-color: #ddbf86;
 }
 .Button.red {
 	background-color: var(--red-4);
