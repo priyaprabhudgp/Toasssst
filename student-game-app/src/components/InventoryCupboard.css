@@ -1,82 +1,90 @@
+/* Main inventory cupboard container */
 .inventoryCupboard {
-  background: #fff;
-  padding: 20px;
-  border-radius: 18px;
-  border: 2px solid #e8d7c3;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  background: #fff; /* White background for clean card look */
+  padding: 20px; /* Inner spacing */
+  border-radius: 18px; /* Rounded corners */
+  border: 2px solid #e8d7c3; /* Light tan border */
+  flex: 1; /* Allows flexible sizing inside parent */
+  display: flex; /* Enables vertical layout */
+  flex-direction: column; /* Stack toast vertically */
+  overflow: hidden; /* Prevent content from spilling out */
 }
 
+/* Inventory title */
 .inventoryCupboard h2 {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: #333;
-  font-size: 24px;
+  margin-top: 0; /* Remove default top spacing */
+  margin-bottom: 16px; /* Space below heading */
+  color: #333; /* Dark gray text */
+  font-size: 24px; /* Larger heading size */
 }
 
+/* Tabs wrapper container */
 .tabsContainer {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid #e8d7c3;
+  display: flex; /* Horizontal layout for tabs */
+  gap: 8px; /* Space between tabs */
+  margin-bottom: 16px; /* Space below tabs */
+  border-bottom: 2px solid #e8d7c3; /* Divider line */
 }
 
+/* Individual tab button */
 .tab {
-  padding: 10px 16px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  color: #666;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s;
+  padding: 10px 16px; /* Clickable area size */
+  background: none; /* Transparent background */
+  border: none; /* Remove default button border */
+  border-bottom: 3px solid transparent; /* Placeholder for active underline */
+  color: #666; /* Default muted text */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-weight: 600; /* Semi-bold text */
+  font-size: 14px; /* Slightly smaller text */
+  transition: all 0.2s; /* Smooth hover/active transition */
 }
 
+/* Tab hover effect */
 .tab:hover {
-  color: #b8956a;
+  color: #b8956a; /* Highlight color on hover */
 }
 
+/* Active tab styling */
 .tab.active {
-  color: #b8956a;
-  border-bottom-color: #b8956a;
+  color: #b8956a; /* Active highlight color */
+  border-bottom-color: #b8956a; /* Underline active tab */
 }
 
+/* Grid container for inventory items */
 .itemsGrid {
-  flex: 1;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 12px;
-  padding-right: 8px;
+  flex: 1; /* Takes remaining vertical space */
+  overflow-y: auto; /* Enables vertical scrolling */
+  display: grid; /* Grid layout for items */
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive columns */
+  gap: 12px; /* Space between grid items */
+  padding-right: 8px; /* Prevent content from touching scrollbar */
 }
 
+/* Message shown when inventory is empty */
 .emptyMessage {
-  grid-column: 1 / -1;
-  text-align: center;
-  color: #999;
-  font-style: italic;
-  padding: 20px;
-  margin: 0;
+  grid-column: 1 / -1; /* Span entire grid width */
+  text-align: center; /* Center text */
+  color: #999; /* Light gray text */
+  font-style: italic; /* Italicized message */
+  padding: 20px; /* Inner spacing */
+  margin: 0; /* Remove default paragraph margin */
 }
 
 /* Scrollbar styling */
 .itemsGrid::-webkit-scrollbar {
-  width: 8px;
+  width: 8px; /* Scrollbar thickness */
 }
 
 .itemsGrid::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+  background: #f1f1f1; /* Track background */
+  border-radius: 4px; /* Rounded track edges */
 }
 
 .itemsGrid::-webkit-scrollbar-thumb {
-  background: #b8956a;
-  border-radius: 4px;
+  background: #b8956a; /* Scroll thumb color */
+  border-radius: 4px; /* Rounded thumb */
 }
 
 .itemsGrid::-webkit-scrollbar-thumb:hover {
-  background: #9a7c52;
+  background: #9a7c52; /* Darker thumb on hover */
 }

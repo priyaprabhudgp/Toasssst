@@ -1,10 +1,12 @@
+/* Main bread container */
 .bread {
-  position: relative;
-  display: flex;
+  position: relative; /* Allows absolute positioning of toppings inside */
+  display: flex; /* Centers bread content */
   align-items: center;
   justify-content: center;
 }
 
+/* Size variations for bread */
 .bread-large {
   width: 300px;
   height: 300px;
@@ -20,15 +22,17 @@
   height: 120px;
 }
 
+/* Base bread image styling */
 .bread-base-image {
-  width: 200%;
+  width: 200%; /* Enlarged for visual scaling */
   height: 200%;
-  object-fit: contain;
-  position: center;
+  object-fit: contain; /* Keeps image proportions */
+  position: center; /* Intended positioning (note: not a standard value) */
   bottom: 0;
   left: 0;
 }
 
+/* Second base image layer (same styling as first) */
 .bread-base-image2 {
   width: 200%;
   height: 200%;
@@ -38,32 +42,33 @@
   left: 0;
 }
 
-
+/* Container for all toppings layered on bread */
 .bread-toppings {
-  position: absolute;
+  position: absolute; /* Layers over base bread */
   width: 200%;
   height: 200%;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: none; /* Prevents interaction blocking */
 }
 
+/* General topping image styling */
 .topping-image {
-  position: absolute;
+  position: absolute; /* Allows stacking via z-index */
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Subtle shadow effect */
 }
 
-/* Spread positioned on top */
+/* Spread positioned above base */
 .spread-image {
   width: 70%;
   height: 60%;
   bottom: 15%;
-  z-index: 1;
+  z-index: 1; /* Lowest topping layer */
 }
 
-/* Jam positioned on top of spread */
+/* Jam positioned above spread */
 .jam-image {
   width: 65%;
   height: 55%;
@@ -71,7 +76,7 @@
   z-index: 2;
 }
 
-/* Meat positioned on top */
+/* Meat positioned above jam */
 .meat-image {
   width: 60%;
   height: 50%;
@@ -79,7 +84,7 @@
   z-index: 3;
 }
 
-/* Mold positioned on top */
+/* Mold positioned above meat */
 .mold-image {
   width: 50%;
   height: 45%;
@@ -87,7 +92,7 @@
   z-index: 4;
 }
 
-/* Mystery positioned on top */
+/* Mystery topping positioned above mold */
 .mystery-image {
   width: 55%;
   height: 50%;
@@ -95,10 +100,10 @@
   z-index: 5;
 }
 
-/* Veggie positioned on top */
+/* Veggie positioned highest in stack */
 .veggie-image {
   width: 65%;
   height: 55%;
   bottom: 22%;
-  z-index: 6;
+  z-index: 6; /* Topmost visible topping */
 }

@@ -1,8 +1,28 @@
+// Import mapping of item IDs to their corresponding image data
 import { ITEM_IMAGES } from "../data/packs";
+
+// Base bread image
 import breadImage from "../assets/bread.png";
+
+// Component-specific styling
 import "./BreadCharacter.css";
 
+/**
+ * BreadCharacter Component
+ * 
+ * Renders a customizable bread character with layered toppings.
+ * 
+ * Props:
+ * - character (object): Contains selected item IDs for each topping layer.
+ *   Possible keys: spread, jam, meat, mold, mystery, veggie
+ * - size (string): Controls overall bread size ("large" by default).
+ */
 export default function BreadCharacter({ character, size = "large" }) {
+
+  /**
+   * Returns the image path for a given item ID.
+   * If the item does not exist in ITEM_IMAGES, returns null.
+   */
   const getItemImage = (itemId) => {
     return ITEM_IMAGES[itemId]?.img || null;
   };
@@ -16,8 +36,10 @@ export default function BreadCharacter({ character, size = "large" }) {
         className="bread-base-image"
       />
 
-      {/* Stacking layers */}
+      {/* Container that stacks toppings visually on top of the bread */}
       <div className="bread-toppings">
+
+        {/* Spread layer (e.g., butter, peanut butter) */}
         {character.spread && (
           <img 
             src={getItemImage(character.spread)}
@@ -26,6 +48,7 @@ export default function BreadCharacter({ character, size = "large" }) {
           />
         )}
 
+        {/* Jam layer */}
         {character.jam && (
           <img 
             src={getItemImage(character.jam)}
@@ -34,6 +57,7 @@ export default function BreadCharacter({ character, size = "large" }) {
           />
         )}
 
+        {/* Meat layer */}
         {character.meat && (
           <img 
             src={getItemImage(character.meat)}
@@ -42,6 +66,7 @@ export default function BreadCharacter({ character, size = "large" }) {
           />
         )}
 
+        {/* Mold layer (special/negative effect layer) */}
         {character.mold && (
           <img 
             src={getItemImage(character.mold)}
@@ -50,6 +75,7 @@ export default function BreadCharacter({ character, size = "large" }) {
           />
         )}
 
+        {/* Mystery layer (hidden or rare item) */}
         {character.mystery && (
           <img 
             src={getItemImage(character.mystery)}
@@ -58,6 +84,7 @@ export default function BreadCharacter({ character, size = "large" }) {
           />
         )}
 
+        {/* Vegetable layer */}
         {character.veggie && (
           <img 
             src={getItemImage(character.veggie)}
@@ -65,6 +92,7 @@ export default function BreadCharacter({ character, size = "large" }) {
             className="topping-image veggie-image"
           />
         )}
+
       </div>
     </div>
   );

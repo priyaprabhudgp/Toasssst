@@ -1,83 +1,90 @@
+/* Container that centers the authentication card on the page */
 .AuthFormContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  background: linear-gradient(135deg, #f7ead8 0%, #f4dab6 100%);
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px; /* Spacing around edges */
+  background: linear-gradient(135deg, #f7ead8 0%, #f4dab6 100%); /* Soft gradient background */
 }
 
+/* Main authentication card styling */
 .AuthCard {
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  padding: 40px;
-  max-width: 420px;
-  width: 100%;
+  background-color: #fff; /* White card background */
+  border-radius: 16px; /* Rounded corners */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+  padding: 40px; /* Inner spacing */
+  max-width: 420px; /* Max width for responsiveness */
+  width: 100%; /* Full width up to max */
 }
 
+/* Title inside the auth card */
 .AuthCard h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 28px;
-  font-size: 28px;
+  text-align: center; /* Center heading text */
+  color: #333; /* Dark gray text */
+  margin-bottom: 28px; /* Space below heading */
+  font-size: 28px; /* Larger font size */
 }
 
+/* Form layout inside card */
 .AuthCard form {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack form elements vertically */
 }
 
+/* Error message styling */
 .AuthCard .error {
-  color: #d32f2f;
-  text-align: center;
-  margin-top: 12px;
-  font-size: 14px;
+  color: #d32f2f; /* Red color for errors */
+  text-align: center; /* Center error text */
+  margin-top: 12px; /* Space above error */
+  font-size: 14px; /* Slightly smaller text */
 }
 
+/* Toggle button (e.g., switch between login/signup) */
 .AuthCard .toggleButton {
   margin-top: 20px;
   display: inline-block;
-  background: none;
+  background: none; /* Remove default button styling */
   border: none;
-  text-decoration: bold;
-  
+  text-decoration: bold; /* Emphasized text (note: not a valid CSS value for text-decoration) */
 }
 
+/* Hover effect for toggle button */
 .AuthCard .toggleButton:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  text-decoration: underline; /* Underline on hover */
+  cursor: pointer; /* Pointer cursor */
   text-decoration: underline
 }
 
 /* Keep button styles scoped to this card */
 .AuthCard .button {
-  all: unset;
+  all: unset; /* Remove default browser button styles */
   box-sizing: border-box;
-  border-radius: 12px;
-  background-color:  #edcc9e;
-  border: 2px solid #f7ead8;
+  border-radius: 12px; /* Rounded button corners */
+  background-color:  #edcc9e; /* Soft beige background */
+  border: 2px solid #f7ead8; /* Light border */
   padding: 12px 24px;
-  height: 48px;
+  height: 48px; /* Fixed button height */
   font-size: 16px;
   color: #333;
-  font-weight: 600;
+  font-weight: 600; /* Semi-bold text */
   cursor: pointer;
-  display: flex;
+  display: flex; /* Center text inside button */
   align-items: center;
   justify-content: center;
-  transition: all 0.18s ease;
-  margin-bottom: 12px;
+  transition: all 0.18s ease; /* Smooth hover animation */
+  margin-bottom: 12px; /* Space between buttons */
 }
 
+/* Hover effect for primary buttons */
 .AuthCard .button:hover {
-  background-color: #f4dab6;
-  border-color: #e4c08d;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(228, 192, 141, 0.16);
+  background-color: #f4dab6; /* Slightly darker background */
+  border-color: #e4c08d; /* Darker border */
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 6px 18px rgba(228, 192, 141, 0.16); /* Subtle shadow */
 }
 
+/* Active (pressed) state for buttons */
 .AuthCard button:active {
-  transform: translateY(0);
+  transform: translateY(0); /* Remove lift effect when pressed */
 }
-

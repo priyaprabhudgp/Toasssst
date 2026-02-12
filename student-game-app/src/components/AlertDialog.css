@@ -1,20 +1,26 @@
+/* Import Radix UI color palettes for consistent theme variables */
 @import "@radix-ui/colors/black-alpha.css";
 @import "@radix-ui/colors/mauve.css";
 @import "@radix-ui/colors/red.css";
 @import "@radix-ui/colors/violet.css";
 
-/* reset */
+/* ---------------- RESET ---------------- */
+/* Remove all default browser button styling */
 button {
 	all: unset;
 }
 
+/* ---------------- OVERLAY ---------------- */
+/* Full-screen dark overlay behind the dialog */
 .AlertDialogOverlay {
-	background-color: var(--black-a9);
+	background-color: var(--black-a9); /* Semi-transparent black */
 	position: fixed;
-	inset: 0;
-	animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+	inset: 0; /* Covers entire viewport */
+	animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1); /* Fade-in animation */
 }
 
+/* ---------------- DIALOG CONTENT ---------------- */
+/* Main modal container centered on screen */
 .AlertDialogContent {
 	background-color: var(--gray-1);
 	border-radius: 6px;
@@ -22,28 +28,32 @@ button {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%); /* Perfect centering */
 	width: 90vw;
 	max-width: 500px;
 	max-height: 85vh;
 	padding: 25px;
-	animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+	animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1); /* Scale + fade animation */
     font-family:'Courier New', Courier, monospace; 
     border: 2px solid #ddbf86;
 }
+
+/* Remove default focus outline when dialog is focused */
 .AlertDialogContent:focus {
 	outline: none;
 }
 
+/* ---------------- TITLE ---------------- */
+/* Dialog heading styling */
 .AlertDialogTitle {
 	margin: 0;
 	color: var(--mauve-12);
 	font-size: 30px;
-	font-weight: 100000;
-
-   
+	font-weight: 100000; /* Extremely bold weight */
 }
 
+/* ---------------- DESCRIPTION ---------------- */
+/* Supporting text under the title */
 .AlertDialogDescription {
 	margin-bottom: 20px;
 	color: var(--mauve-11);
@@ -51,6 +61,8 @@ button {
 	line-height: 1.5;
 }
 
+/* ---------------- BUTTON BASE STYLE ---------------- */
+/* Shared button styling */
 .Button {
 	display: inline-flex;
 	align-items: center;
@@ -61,15 +73,23 @@ button {
 	line-height: 1;
 	font-weight: 500;
 	height: 35px;
-	user-select: none;
+	user-select: none; /* Prevent text selection */
 }
+
+/* Remove focus outline if not keyboard-focused */
 .Button:focus:not(:focus-visible) {
 	outline: 0;
 }
+
+/* Accessible keyboard focus styling */
 .Button:focus-visible {
 	outline: 2px solid var(--violet-6);
 	outline-offset: 1px;
 }
+
+/* ---------------- BUTTON VARIANTS ---------------- */
+
+/* Violet theme button */
 .Button.violet {
 	background-color: #ffe4a3;
 	color: var(--violet-12);
@@ -78,6 +98,8 @@ button {
 .Button.violet:hover {
 	background-color: #ddbf86;
 }
+
+/* Red theme button (typically destructive actions) */
 .Button.red {
 	background-color: var(--red-4);
 	color: var(--red-11);
@@ -86,6 +108,8 @@ button {
 .Button.red:hover {
 	background-color: var(--red-5);
 }
+
+/* Mauve theme button (neutral/secondary actions) */
 .Button.mauve {
 	background-color: var(--mauve-4);
 	color: var(--mauve-11);
@@ -95,6 +119,9 @@ button {
 	background-color: var(--mauve-5);
 }
 
+/* ---------------- ANIMATIONS ---------------- */
+
+/* Fade in overlay */
 @keyframes overlayShow {
 	from {
 		opacity: 0;
@@ -104,6 +131,7 @@ button {
 	}
 }
 
+/* Fade + scale in dialog content */
 @keyframes contentShow {
 	from {
 		opacity: 0;

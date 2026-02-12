@@ -1,52 +1,66 @@
+/* ============================= */
+/* Inventory Item Card Container */
+/* ============================= */
 .inventoryItem {
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  border: 2px solid #e8d7c3;
-  transition: all 0.2s ease;
+  background: #fff; /* White card background */
+  border-radius: 12px; /* Rounded corners for soft UI look */
+  padding: 12px; /* Inner spacing */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center items horizontally */
+  gap: 10px; /* Space between child elements */
+  border: 2px solid #e8d7c3; /* Default border color */
+  transition: all 0.2s ease; /* Smooth hover animation */
 }
 
+/* Hover effect for inventory card */
 .inventoryItem:hover {
-  border-color: #b8956a;
-  box-shadow: 0 4px 12px rgba(184, 149, 106, 0.2);
+  border-color: #b8956a; /* Darker border on hover */
+  box-shadow: 0 4px 12px rgba(184, 149, 106, 0.2); /* Subtle shadow lift effect */
 }
 
+/* Special styling when item is equipped */
 .inventoryItem.equipped {
-  background: #f0f8e8;
-  border-color: #4caf50;
+  background: #f0f8e8; /* Light green background */
+  border-color: #4caf50; /* Green border to indicate active state */
 }
 
+
+/* ============================= */
+/* Image Container */
+/* ============================= */
 .itemImageWrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #faf7f2;
+  position: relative; /* Allows absolute positioning inside (badge) */
+  width: 100%; /* Full width of parent */
+  aspect-ratio: 1; /* Keeps image container square */
+  overflow: hidden; /* Prevent overflow */
+  border-radius: 8px; /* Rounded corners */
+  background: #faf7f2; /* Light background for image area */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Center image */
 }
 
+/* Image styling */
 .itemImage {
   width: 90%;
   height: 90%;
-  object-fit: contain;
+  object-fit: contain; /* Keeps full image visible without distortion */
 }
 
+
+/* ============================= */
+/* Equipped Badge (Check Icon) */
+/* ============================= */
 .equippedBadge {
-  position: absolute;
+  position: absolute; /* Positioned inside image wrapper */
   top: 4px;
   right: 4px;
-  background: #4caf50;
+  background: #4caf50; /* Green circle */
   color: white;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 50%; /* Makes it circular */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,42 +68,54 @@
   font-size: 14px;
 }
 
+
+/* ============================= */
+/* Item Information Section */
+/* ============================= */
 .itemInfo {
-  width: 100%;
-  text-align: center;
+  width: 100%; /* Full width alignment */
+  text-align: center; /* Center text */
 }
 
+/* Item name styling */
 .itemName {
   margin: 0;
   font-size: 13px;
   color: #333;
   font-weight: 600;
-  white-space: nowrap;
+  white-space: nowrap; /* Prevent wrapping */
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* Adds "..." if text is too long */
 }
 
+
+/* ============================= */
+/* Equip Button Styling */
+/* ============================= */
 .equipButton {
-  width: 100%;
+  width: 100%; /* Full width button */
   padding: 6px 1px;
-  background: #b8956a;
+  background: #b8956a; /* Default brown color */
   color: white;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: pointer; /* Pointer on hover */
   font-size: 12px;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: background 0.2s; /* Smooth color change */
 }
 
+/* Hover effect for default button */
 .equipButton:hover {
   background: #9a7c52;
 }
 
+/* Equipped button state */
 .equipButton.equipped {
-  background: #4caf50;
+  background: #4caf50; /* Green when equipped */
 }
 
+/* Hover effect when equipped */
 .equipButton.equipped:hover {
   background: #388e3c;
 }
