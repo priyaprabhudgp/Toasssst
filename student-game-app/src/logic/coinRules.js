@@ -1,13 +1,13 @@
 // coinRules.js
 
-const BASE_COINS = 30;
-const ON_TIME_BONUS = 20;
+const BASE_COINS = 100;
+const ON_TIME_BONUS = 100;
 const LATE_PENALTY_PER_DAY = 10;
 
 const GRADE_BONUS = {
-  A: 50,
-  B: 30,
-  C: 10,
+  A: 200,
+  B: 150,
+  C: 100,
   D: 0,
   F: 0,
 };
@@ -48,7 +48,7 @@ export function calculateOverduePenalty({ dueDate, now }) {
   if (now <= dueDate) return 0;
 
   const daysLate = Math.floor((now - dueDate) / 86400000);
-  return daysLate * 5; // 5 coins per day late
+  return daysLate * 50; // 5 coins per day late
 }
 
 export function calculateDailyPenalty(assignments, now) {
