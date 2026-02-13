@@ -1,6 +1,6 @@
 Check out our site here: https://toasssst-f3340.web.app/
 
-#User Manual
+# User Manual
 Toast is a productivity game designed to help students stay on top of assignments while earning rewards. The app blends task management + gacha mechanics.
 
 It allows users: Track assignments, Earn coins → buy rewards, Customize a bread character.
